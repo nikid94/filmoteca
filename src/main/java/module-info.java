@@ -3,7 +3,7 @@ module dam.alumno.filmoteca {
     requires javafx.fxml;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
-
+    requires java.desktop;
 
 
     opens dam.alumno.filmoteca to javafx.fxml;
