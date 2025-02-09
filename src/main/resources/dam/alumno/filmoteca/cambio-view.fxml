@@ -6,11 +6,10 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER_LEFT" prefHeight="602.0" prefWidth="398.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dam.alumno.filmoteca.CambioController">
+<VBox alignment="CENTER_LEFT" prefHeight="602.0" prefWidth="398.0" stylesheets="@filmoteca.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dam.alumno.filmoteca.CambioController">
         <children>
             <Text fx:id="txID" strokeType="OUTSIDE" strokeWidth="0.0" text="Nueva Película" />
             <Text fx:id="txTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="Titulo:" />
@@ -23,11 +22,7 @@
             <Slider fx:id="slRating" blockIncrement="1.0" max="10.0" onDragDetected="#onSliderMoved" showTickLabels="true" showTickMarks="true" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Portada:" />
       <TextField fx:id="tfPoster" promptText="Introduce la URL de la portada" />
-            <ImageView fx:id="ivPortada" fitHeight="202.0" fitWidth="381.0" pickOnBounds="true" preserveRatio="true">
-         <VBox.margin>
-            <Insets bottom="5.0" top="5.0" />
-         </VBox.margin>
-      </ImageView>
+      <Text fx:id="txError" strokeType="OUTSIDE" strokeWidth="0.0" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0">
         <buttons>
             <Button fx:id="btnCambio" alignment="CENTER" mnemonicParsing="false" onAction="#onCambioClick" text="Cambio" />

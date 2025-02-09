@@ -39,3 +39,6 @@
     -fx-background-color: #3a883a;
     -fx-text-fill: white;
 }
+#txError{
+    -fx-fill: red;
+}

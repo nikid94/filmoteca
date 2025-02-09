@@ -2,20 +2,23 @@ package dam.alumno.filmoteca;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
+import java.net.URL;
 import java.util.Comparator;
+import java.util.ResourceBundle;
 
-public class CambioController {
+public class CambioController implements Initializable {
+    public Text txError;
     Pelicula pelicula = new Pelicula();
     int peliculaIndex;
     public TextField tfPoster;
@@ -31,9 +34,19 @@ public class CambioController {
     public Text txRating;
     public Slider slRating;
     private double slValue;
-    public ImageView ivPortada;
     public Button btnCambio;
     public Button btnCancelar;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        txID.getStyleClass().add("titulo");
+        btnCambio.getStyleClass().add("btn-verde");
+        btnCancelar.getStyleClass().add("btn-rojo");
+        tfYear.setTextFormatter(new javafx.scene.control.TextFormatter<>(
+                change -> (change.getControlNewText().matches("\\d{0,4}")) ? change : null
+        ));
+
+    }
 
     public void onSliderMoved(MouseEvent actionEvent) {
         slRating.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -44,15 +57,13 @@ public class CambioController {
 
     }
 
+
     public void peliculaCambio(Pelicula pelicula, int index) {
         peliculaIndex = index;
+        txID.getStyleClass().removeAll("titulo");
         txID.setText("ID: " + pelicula.getId());
         tfTitle.setText(pelicula.getTitle());
-        tfYear.setTextFormatter(new javafx.scene.control.TextFormatter<>(
-                new IntegerStringConverter(),
-                pelicula.getYear(),
-                change -> (change.getControlNewText().matches("\\d{0,4}")) ? change : null
-        ));
+        tfYear.setText(String.valueOf(pelicula.getYear()));
         taDesc.setText(pelicula.getDescription());
         txRating.setText(String.valueOf(pelicula.getRating()));
         slRating.setValue(pelicula.getRating());
@@ -66,12 +77,19 @@ public class CambioController {
     public void onCambioClick(ActionEvent actionEvent) {
         Button button = (Button) actionEvent.getSource();
         if(button.getText().equals("Añadir Película")){
-            idNuevo(pelicula);
-            pelicula.setTitle(tfTitle.getText());
-            pelicula.setYear(Integer.parseInt(tfYear.getText()));
-            pelicula.setDescription(taDesc.getText());
-            pelicula.setRating((float) slValue);
-            peliculas.add(pelicula);
+            String error = "Debe introducir el titulo y el año de la película.";
+            if(tfTitle.getText().isEmpty() || tfYear.getText().isEmpty()) {
+                txError.setText(error);
+                return;
+            }else {
+                idNuevo(pelicula);
+                pelicula.setTitle(tfTitle.getText());
+                pelicula.setYear(Integer.parseInt(tfYear.getText()));
+                pelicula.setDescription(taDesc.getText());
+                pelicula.setRating((float) slValue);
+                peliculas.add(pelicula);
+            }
+
         }else {
             pelicula = peliculas.get(peliculaIndex);
             pelicula.setTitle(tfTitle.getText());
@@ -108,6 +126,4 @@ public class CambioController {
 
     }
 
-
-    
 }
